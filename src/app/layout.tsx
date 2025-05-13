@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navigation/Navbar";
-import BackgroundEffect from "./components/Visual/BackgroundEffect"; // importa o novo componente
+import BackgroundEffect from "./components/Visual/BackgroundEffect"; 
+import Footer from "./components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <BackgroundEffect variant="home" />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

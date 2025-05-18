@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Target } from "framer-motion";
+
 
 const images = [
   "https://images.unsplash.com/photo-1532194579966-1455bade30d6?q=80&w=1964&auto=format&fit=crop",
@@ -14,7 +16,7 @@ const images = [
 
 const positions = ["center", "left1", "left", "right", "right1"] as const;
 
-const imageVariants: Record<typeof positions[number], any> = {
+const imageVariants: Record<typeof positions[number], Target> = {
     center: { x: "0%", scale: 1.1, zIndex: 5, opacity: 1 },
     left1: { x: "-120%", scale: 0.7, zIndex: 2, opacity: 0.5 },     // antes -60%
     left: { x: "-160%", scale: 0.5, zIndex: 1, opacity: 0 },       // antes -120%

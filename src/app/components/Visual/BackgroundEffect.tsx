@@ -13,9 +13,8 @@ export default function BackgroundEffect({ variant = "default" }: BackgroundEffe
       <Image
         src="/images/bg.png"
         alt="Background"
-        layout="fill"
-        objectFit="cover"
-        className="scale-125 blur-[90px] brightness-[.8]"
+        fill
+        className="object-cover scale-125 blur-[90px] brightness-[.8]"
       />
       
 

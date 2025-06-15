@@ -1,4 +1,3 @@
-
 import HeroSection from "./components/HeroSection/HeroSection";
 import Sensation from "./components/Sensation/Sensation";
 import Services from "./components/Services/Services";
@@ -14,7 +13,6 @@ export default function Home() {
         <Carousel />
         <BrandExperienceSection />
          <Services />
-        
       </main>
       
     </div>

@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen className="max-w-screen-xl mx-auto px-16"`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen className="max-w-screen-xl mx-auto"`}
       >
         <BackgroundEffect variant="home" />
         <Navbar />

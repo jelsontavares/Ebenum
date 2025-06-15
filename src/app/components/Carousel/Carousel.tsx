@@ -1,89 +1,118 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Target } from "framer-motion";
-
 
 const images = [
-  "https://images.unsplash.com/photo-1532194579966-1455bade30d6?q=80&w=1964&auto=format&fit=crop",
-  "https://plus.unsplash.com/premium_photo-1680799221420-5baff79e4b6a?q=80&w=1976&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1532194579966-1455bade30d6?q=80&w=1964&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1532194579966-1455bade30d6?q=80&w=1964&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1532194579966-1455bade30d6?q=80&w=1964&auto=format&fit=crop",
+  "/images/carousel/1.png",
+  "/images/carousel/2.png",
+  "/images/carousel/3.png",
+  "/images/carousel/3.1.png",
+  "/images/carousel/4.png",
+  "/images/carousel/5.png",
+  "/images/carousel/6.png",
+  "/images/carousel/7.jpeg",
+  "/images/carousel/8.jpeg",
+  "/images/carousel/9.png",
+  "/images/carousel/10.jpeg",
+  "/images/carousel/11.jpeg",
+  "/images/carousel/12.jpeg",
+  "/images/carousel/13.jpeg",
+  "/images/carousel/14.jpeg",
+  "/images/carousel/15.jpeg",
+  "/images/carousel/16.jpeg",
+  "/images/carousel/17.jpeg",
 ];
 
-const positions = ["center", "left1", "left", "right", "right1"] as const;
+//const positions = ["left", "left1", "center", "right1", "right"] as const;
 
-const imageVariants: Record<typeof positions[number], Target> = {
-    center: { x: "0%", scale: 1.1, zIndex: 5, opacity: 1 },
-    left1: { x: "-120%", scale: 0.7, zIndex: 2, opacity: 0.5 },     // antes -60%
-    left: { x: "-160%", scale: 0.5, zIndex: 1, opacity: 0 },       // antes -120%
-    right: { x: "160%", scale: 0.5, zIndex: 1, opacity: 0 },       // antes 120%
-    right1: { x: "120%", scale: 0.7, zIndex: 2, opacity: 0.5 },     // antes 60%
-  };
+const imageVariants = {
+  left: { x: "-150%", scale: 0.5, zIndex: 1, opacity: 0 },
+  left1: { x: "-115%", scale: 0.7, zIndex: 2, opacity: 0.5 },
+  center: { x: "0%", scale: 1.1, zIndex: 5, opacity: 1 },
+  right1: { x: "115%", scale: 0.7, zIndex: 2, opacity: 0.5 },
+  right: { x: "150%", scale: 0.5, zIndex: 1, opacity: 0 },
+};
+
 export default function Carousel() {
-  const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
+  const [centerIndex, setCenterIndex] = useState(0);
 
   const handleNext = () => {
-    setPositionIndexes((prev) => prev.map((i) => (i + 1) % 5));
+    setCenterIndex((prev) => (prev + 1) % images.length);
   };
 
-  const handleBack = () => {
-    setPositionIndexes((prev) => prev.map((i) => (i - 1 + 5) % 5));
+  const handlePrev = () => {
+    setCenterIndex((prev) => (prev - 1 + images.length) % images.length);
   };
+
+  const getPosition = (i: number) => {
+    const pos = (i - centerIndex + images.length) % images.length;
+    if (pos === 0) return "center";
+    if (pos === 1) return "right1";
+    if (pos === 2) return "right";
+    if (pos === images.length - 1) return "left1";
+    if (pos === images.length - 2) return "left";
+    return null; // ocultar os outros
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-      <section className="relative flex flex-col items-center justify-center min-h-screen  px-6 py-24 overflow-hidden text-white">
-          <h2 className="text-4xl font-serif text-[#AC8E5C] mb-20">Selling experiences, not products</h2>
-          <div className="relative w-full max-w-5xl h-[400px] flex items-center justify-center">
-              {/* Setas laterais */}
-            <button
-            onClick={handleBack}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white text-black w-10 h-10 rounded-full shadow hover:scale-110 transition"
-            >
-            ←
-            </button>
-            <button
-            onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white text-black w-10 h-10 rounded-full shadow hover:scale-110 transition"
-            >
-            →
-            </button>
-        {images.map((src, index) => (
-          <motion.div
-            key={index}
-            className="absolute"
-            initial={false}
-            animate={positions[positionIndexes[index]]}
-            variants={imageVariants}
-            transition={{
-              duration: 0.6,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          >
-            <div
-              className={`relative w-[250px] h-[350px] rounded-xl overflow-hidden shadow-2xl ${
-                positions[positionIndexes[index]] === "center"
-                  ? "ring-4 ring-white"
-                  : ""
-              }`}
-            >
-              <Image
-                src={src}
-                alt={`Slide ${index + 1}`}
-                fill
-                sizes="250px"
-                className="object-cover"
-              />
-            </div>
-          </motion.div>
-        ))}
-      </div>
+    <section className="relative flex flex-col items-center justify-center min-h-screen px-6 py-24 overflow-hidden text-white mb-50">
+      <h2 className="text-4xl font-serif text-[#AC8E5C] mb-10 text-center">
+        Emotion
+      </h2>
+      <p className="mb-25 text-[#AC8E5C] max-w-sm text-center font-sans">
+        People don&apos;t fall in love with products, they fall in love with how it make them feel
+      </p>
 
-      {/* Linha decorativa */}
-      <div className="mt-16 h-[4px] w-3/4 bg-gradient-to-r from-[#ac8e5c] via-white to-[#ac8e5c] rounded-full" />
+      <div className="relative w-full max-w-5xl h-[400px] flex items-center justify-center">
+        {images.map((src, index) => {
+          const pos = getPosition(index);
+          if (!pos) return null;
+
+          return (
+            <motion.div
+              key={index}
+              className="absolute cursor-pointer"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -50) handleNext();
+                if (info.offset.x > 50) handlePrev();
+              }}
+              onClick={() => {
+                if (pos === "right" || pos === "right1") handleNext();
+                if (pos === "left" || pos === "left1") handlePrev();
+              }}
+              initial={false}
+              animate={pos}
+              variants={imageVariants}
+              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <div
+                className={`relative w-[250px] h-[350px] overflow-hidden shadow-2xl ${
+                  pos === "center" ? "ring-0 ring-white" : ""
+                }`}
+              >
+                <Image
+                  src={src}
+                  alt={`Slide ${index + 1}`}
+                  fill
+                  sizes="250px"
+                  className="object-cover"
+                />
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
     </section>
   );
 }
